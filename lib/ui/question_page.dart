@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:i_am_wise/ui/model/question_list.dart';
 
-
 class QuestionPage extends StatefulWidget {
   @override
   QuestionPageState createState() => QuestionPageState();
@@ -13,8 +12,18 @@ class QuestionPageState extends State<QuestionPage> {
   //decalear instance
   QuestionList questionList = QuestionList();
 
+  void checkAnswer(bool clickedAnswer) {
+    bool actualAnswer = questionList.getAnswer();
 
-  int currentIndex = 0;
+    setState(() {
+      if (clickedAnswer == actualAnswer) {
+        print("You are right");
+      } else {
+        print("You are worng");
+      }
+      questionList.nextQuestion();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +36,7 @@ class QuestionPageState extends State<QuestionPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questionList.questionSets[currentIndex].questions,
+                questionList.getQuestion(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -54,7 +63,7 @@ class QuestionPageState extends State<QuestionPage> {
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
                       image: AssetImage(
-                      questionList.questionSets[currentIndex].images,
+                        questionList.getImage(),
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -79,16 +88,7 @@ class QuestionPageState extends State<QuestionPage> {
                 ),
               ),
               onPressed: () {
-                bool correctValue = questionList.questionSets[currentIndex].answers;
-
-                if (correctValue == true) {
-                  print('Correct');
-                } else {
-                  print('Wrong');
-                }
-                setState(() {
-                  currentIndex++;
-                });
+                checkAnswer(true);
               },
             ),
           ),
@@ -108,16 +108,7 @@ class QuestionPageState extends State<QuestionPage> {
                 ),
               ),
               onPressed: () {
-               bool correctValue = questionList.questionSets[currentIndex].answers;
-
-                if (correctValue == false) {
-                  print('Correct');
-                } else {
-                  print('Wrong');
-                }
-                setState(() {
-                  currentIndex++;
-                });
+                checkAnswer(false);
               },
             ),
           ),
