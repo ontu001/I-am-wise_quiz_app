@@ -11,16 +11,16 @@ class QuestionPageState extends State<QuestionPage> {
 
   //decalear instance
   QuestionList questionList = QuestionList();
-
+//for verified answer
   void checkAnswer(bool clickedAnswer) {
-    bool actualAnswer = questionList.getAnswer();
-
+    bool acctualAnswer = questionList.getAnswer();
     setState(() {
-      if (clickedAnswer == actualAnswer) {
-        print("You are right");
+      if (clickedAnswer == acctualAnswer) {
+        print("Congrats! answer is right");
       } else {
-        print("You are worng");
+        print("Try again! Answer is not correct");
       }
+
       questionList.nextQuestion();
     });
   }
