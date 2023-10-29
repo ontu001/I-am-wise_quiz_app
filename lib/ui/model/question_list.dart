@@ -2,7 +2,8 @@ import 'package:i_am_wise/ui/model/question_instance.dart';
 
 class QuestionList {
   int _questionNumber = 0;
-  List<QuestionInstance> _questionSets = [
+
+  List<QuestionInstance> questionSets = [
     QuestionInstance(
         questions: 'Flutter can only develop mobile applications.',
         images: "images/flutter.png",
@@ -19,23 +20,28 @@ class QuestionList {
 
 //for moving next question
   void nextQuestion() {
-    if (_questionNumber < _questionSets.length - 1) {
+    if (_questionNumber < questionSets.length - 1) {
       _questionNumber++;
     }
   }
 
+
 //for getting question
   String getQuestion() {
-    return _questionSets[_questionNumber].questions;
+    return questionSets[_questionNumber].questions;
   }
 
   //for getting images
   String getImage() {
-    return _questionSets[_questionNumber].images;
+    return questionSets[_questionNumber].images;
   }
 
   //for getting answers
   bool getAnswer() {
-    return _questionSets[_questionNumber].answers;
+    return questionSets[_questionNumber].answers;
+  }
+
+  void reset() {
+    _questionNumber = 0;
   }
 }

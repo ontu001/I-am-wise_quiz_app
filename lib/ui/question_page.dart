@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:i_am_wise/ui/model/question_list.dart';
 
@@ -11,16 +14,28 @@ class QuestionPageState extends State<QuestionPage> {
 
   //decalear instance
   QuestionList questionList = QuestionList();
+
 //for verified answer
   void checkAnswer(bool clickedAnswer) {
-    bool acctualAnswer = questionList.getAnswer();
-    setState(() {
-      if (clickedAnswer == acctualAnswer) {
-        print("Congrats! answer is right");
-      } else {
-        print("Try again! Answer is not correct");
-      }
+    bool actualAnswer = questionList.getAnswer();
 
+    setState(() {
+      if (iconList.length == questionList.questionSets.length) {
+        questionList.reset();
+        iconList.clear();
+      } else {
+        if (clickedAnswer == actualAnswer) {
+          iconList.add(Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          iconList.add(Icon(
+            Icons.close,
+            color: Colors.red,
+          ));
+        }
+      }
       questionList.nextQuestion();
     });
   }
@@ -113,8 +128,11 @@ class QuestionPageState extends State<QuestionPage> {
             ),
           ),
         ),
-        Row(
-          children: iconList,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: iconList,
+          ),
         )
         //TODO: Add a Row here to show your right or wrong answer
       ],
